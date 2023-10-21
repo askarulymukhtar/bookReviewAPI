@@ -13,11 +13,11 @@ import (
 
 type Book struct {
 	ID              uuid.UUID `json:"id"`
-	Author          string    `json:"author"`
 	Title           string    `json:"title"`
+	Author          string    `json:"author"`
 	PublicationYear int       `json:"publication_year"`
 	Genre           string    `json:"genre"`
-	IBSN            string    `json:"ibsn"`
+	ISNB            string    `json:"isnb"`
 }
 
 func main() {
