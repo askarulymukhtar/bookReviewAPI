@@ -1,4 +1,4 @@
-package main
+package db
 
 import (
 	"database/sql"
@@ -17,7 +17,7 @@ const (
 
 var DB *sql.DB
 
-func openConnection() error {
+func OpenConnection() error {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
@@ -31,6 +31,6 @@ func openConnection() error {
 	return nil
 }
 
-func closeConnection() error {
+func CloseConnection() error {
 	return DB.Close()
 }

@@ -1,4 +1,4 @@
-package main
+package handlers
 
 import (
 	"encoding/json"
@@ -8,7 +8,7 @@ import (
 
 func responseWithError(w http.ResponseWriter, code int, msg string) {
 	if code > 499 {
-		log.Printf("Responding with 5XX error:", msg)
+		log.Printf("Responding with 5XX error: %v", msg)
 	}
 	type errResponse struct {
 		Error string `json:"error"`
@@ -21,7 +21,7 @@ func responseWithError(w http.ResponseWriter, code int, msg string) {
 func responseWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	data, err := json.Marshal(payload)
 	if err != nil {
-		log.Fatal("Error while parsing JSON: %v", payload)
+		log.Printf("Error while parsing JSON: %v", payload)
 	}
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(code)

@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/askarulymukhtar/go/bookReviewAPI/db"
+	"github.com/askarulymukhtar/go/bookReviewAPI/handlers"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
@@ -12,11 +14,11 @@ import (
 
 func main() {
 	godotenv.Load()
-	err := openConnection()
+	err := db.OpenConnection()
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer closeConnection()
+	defer db.CloseConnection()
 	router := chi.NewRouter()
 
 	router.Use(cors.Handler(cors.Options{
@@ -29,13 +31,13 @@ func main() {
 	}))
 
 	v1Router := chi.NewRouter()
-	v1Router.Get("/healthz", handlerReadiness)
-	v1Router.Get("/err", handlerError)
-	v1Router.Get("/books", handleGetAll)
-	v1Router.Get("/books/{id}", handleGetById)
-	v1Router.Post("/books", handleCreate)
-	v1Router.Put("/books/{id}", handleUpdate)
-	v1Router.Delete("/books/{id}", handleDelete)
+	v1Router.Get("/healthz", handlers.HandlerReadiness)
+	v1Router.Get("/err", handlers.HandlerError)
+	v1Router.Get("/books", handlers.HandleGetAll)
+	v1Router.Get("/books/{id}", handlers.HandleGetById)
+	v1Router.Post("/books", handlers.HandleCreate)
+	v1Router.Put("/books/{id}", handlers.HandleUpdate)
+	v1Router.Delete("/books/{id}", handlers.HandleDelete)
 	router.Mount("/v1", v1Router)
 
 	port := os.Getenv("PORT")
