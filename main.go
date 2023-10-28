@@ -31,8 +31,11 @@ func main() {
 	v1Router := chi.NewRouter()
 	v1Router.Get("/healthz", handlerReadiness)
 	v1Router.Get("/err", handlerError)
-	v1Router.Get("/books", handleGetById)
+	v1Router.Get("/books", handleGetAll)
+	v1Router.Get("/books/{id}", handleGetById)
 	v1Router.Post("/books", handleCreate)
+	v1Router.Put("/books/{id}", handleUpdate)
+	v1Router.Delete("/books/{id}", handleDelete)
 	router.Mount("/v1", v1Router)
 
 	port := os.Getenv("PORT")
