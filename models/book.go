@@ -10,7 +10,7 @@ type Book struct {
 	Author          string    `json:"author"`
 	PublicationYear int       `json:"publication_year"`
 	Genre           string    `json:"genre"`
-	ISNB            string    `json:"isnb"`
+	ISBN            string    `json:"isbn"`
 }
 
 type BookDTO struct {
@@ -18,5 +18,5 @@ type BookDTO struct {
 	Author          string `json:"author"`
 	PublicationYear int    `json:"publication_year"`
 	Genre           string `json:"genre"`
-	ISNB            string `json:"isnb"`
+	ISBN            string `json:"isbn"`
 }

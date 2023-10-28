@@ -21,7 +21,7 @@ func HandleGetAll(w http.ResponseWriter, r *http.Request) {
 	var books []models.BookDTO
 	for rows.Next() {
 		var i models.BookDTO
-		if err = rows.Scan(&i.Title, &i.Author, &i.PublicationYear, &i.Genre, &i.ISNB); err != nil {
+		if err = rows.Scan(&i.Title, &i.Author, &i.PublicationYear, &i.Genre, &i.ISBN); err != nil {
 			log.Fatal(err)
 		}
 		books = append(books, i)
@@ -35,7 +35,7 @@ func HandleGetById(w http.ResponseWriter, r *http.Request) {
 	var book models.BookDTO
 
 	if err := db.DB.QueryRow("SELECT title, author, publication_year, genre, isnb FROM books WHERE id = $1", id).Scan(
-		&book.Title, &book.Author, &book.PublicationYear, &book.Genre, &book.ISNB); err != nil {
+		&book.Title, &book.Author, &book.PublicationYear, &book.Genre, &book.ISBN); err != nil {
 		log.Fatal(err)
 		return
 	}
@@ -53,7 +53,7 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := db.DB.QueryRow("INSERT INTO books(id, title, author, publication_year, genre, isnb) VALUES ($1, $2, $3, $4, $5, $6)",
-		uuid.New(), params.Title, params.Author, params.PublicationYear, params.Genre, params.ISNB).Err(); err != nil {
+		uuid.New(), params.Title, params.Author, params.PublicationYear, params.Genre, params.ISBN).Err(); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		log.Fatal(err)
 		return
@@ -72,7 +72,7 @@ func HandleUpdate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := db.DB.QueryRow("UPDATE books SET title=$2, author=$3, publication_year=$4, genre=$5, isnb=$6 WHERE id=$1",
-		id, params.Title, params.Author, params.PublicationYear, params.Genre, params.ISNB).Err(); err != nil {
+		id, params.Title, params.Author, params.PublicationYear, params.Genre, params.ISBN).Err(); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		log.Fatal(err)
 		return

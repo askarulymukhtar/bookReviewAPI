@@ -1,11 +1,11 @@
 -- +goose Up
 CREATE TABLE books (
-    id UUID PRIMARY KEY,
+    id UUID UNIQUE NOT NULL PRIMARY KEY,
     title TEXT,
     author TEXT,
     publication_year INTEGER,
     genre TEXT,
-    isnb TEXT
+    isbn TEXT UNIQUE NOT NULL
 );
 
 -- +goose Down
